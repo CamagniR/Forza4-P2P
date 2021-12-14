@@ -1,0 +1,56 @@
+Protocollo di comunicazione 
+Tasto1	Tasto2	Tasto3	Tasto4	Tasto5	Tasto6	Tasto7
+-------------------------------------------------------
+-      -      -        -       -       -       -      -
+-------------------------------------------------------
+-      -      -        -       -       -       -      -
+-------------------------------------------------------
+-      -      -        -       -       -       -      -
+-------------------------------------------------------
+-      -      -        -       -       -       -      -
+-------------------------------------------------------
+-      -      -        -       -       -       -      -
+-------------------------------------------------------
+-      -      -        -       -       -       -      -
+-------------------------------------------------------		
+						
+						
+						
+						
+						
+
+
+Il progetto sarà strutturato in matrici.
+Ogni volta che si preme un tasto verrà inviato all’avversario un messaggio con la seguente sintassi
+
+INIZIO CONNESSIONE
+Peer1: STR; NickName; Colore                             // il peer uno invia un messaggio per invitare l’altro a giocare
+Peer2:  YES;Nickname;Colore		           //il peer2  accetta di giocare o rifiuta
+             NON
+Peer1: YES;  			 // il peer1 conferma la connessione
+             NON; 
+
+SVOLGIMENTO DELLA PARTITA
+Peer2(1) INV;Posizione;End  		//nel momento i cui schiaccia il pulsante ci sarà un controllo e un    
+                                                                          aggiornamento della grafica
+					   Se End è a true la partita è stata vinta dal peer che invia il mess.
+                                                                          (se è a punti chi riceve vede il punteggio aggiornarsi quando 
+                                                                           refresha la grafica)
+Peer1(2) RIV
+Peer vincitore: RIY 			 // il peer1 conferma la rivincita
+                           RIN
+
+CHIUSURA CONNESSIONE
+Peer2(1) CLS;                                           //da usare sia se il giocatore chiude il programma anche durante la 
+                                                                       partita o quando uno dei due ha vinto
+
+
+
+
+AGGIUNTE (Dopo aver finito il gioco base)
+-Friendlist
+-Sfida a punteggio
+-Perks in partita (esempio moneta che elimina quella sottostante, possibilità randomica di generare la moneta)
+-Match history (Salvata su un file)
+-Scelta colore player
+-Scelta di un avatar (immagine o disegnino altrimenti porta piange)
