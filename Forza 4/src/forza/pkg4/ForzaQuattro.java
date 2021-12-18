@@ -20,6 +20,9 @@ public class ForzaQuattro {
     private static int COL=7;
     private static Casella[][] matrix; 
     private boolean partitaFinita; // False= non è ancora finita True= partita finita
+    private boolean statoInizio;
+    private String ultimoTag;
+    private int ultimoGiocatore; //ultimo player che ha fatto una giocata 1=player1 2=player2
     
     public ForzaQuattro() {
         
@@ -31,6 +34,9 @@ public class ForzaQuattro {
             }
         }
         partitaFinita=false;
+        statoInizio=false; //false = non è iniziata la partita
+        ultimoTag="";
+        ultimoGiocatore=0;
     
     }
     
@@ -62,6 +68,38 @@ public class ForzaQuattro {
         }
         
         return false;
+    }
+
+    public void setPartitaFinita(boolean partitaFinita) {
+        this.partitaFinita = partitaFinita;
+    }
+
+    public void setStatoInizio(boolean statoInizio) {
+        this.statoInizio = statoInizio;
+    }
+
+    public boolean isPartitaFinita() {
+        return partitaFinita;
+    }
+
+    public boolean isStatoInizio() {
+        return statoInizio;
+    }
+
+    public String getUltimoTag() {
+        return ultimoTag;
+    }
+
+    public void setUltimoTag(String ultimoTag) {
+        this.ultimoTag = ultimoTag;
+    }
+
+    public int getUltimoGiocatore() {
+        return ultimoGiocatore;
+    }
+
+    public void setUltimoGiocatore(int ultimoGiocatore) {
+        this.ultimoGiocatore = ultimoGiocatore;
     }
     
     

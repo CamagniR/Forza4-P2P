@@ -5,10 +5,61 @@
  */
 package forza.pkg4;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Riccardo
  */
-public class ThreadRicevi {
+public class ThreadRicevi extends Thread{
     
+    private ForzaQuattro condivisa;
+    private DatagramSocket udpClientSocket;
+    private int IDplayer;
+    
+
+    public ThreadRicevi(DatagramSocket ds, ForzaQuattro c) throws Exception {
+        this.udpClientSocket = ds;
+        condivisa=c;
+        IDplayer=0;
+    }
+
+
+    public void run() {
+        
+        byte[] receiveData = new byte[1024];
+        
+        while (true) {            
+            
+            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+
+            try {
+                
+                udpClientSocket.receive(receivePacket);
+            } catch (IOException ex) {
+                Logger.getLogger(ThreadRicevi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+                String messaggioRicevuto =  new String(receivePacket.getData(), 0, receivePacket.getLength());
+                String[] campi= messaggioRicevuto.split(";");
+                if (condivisa.getUltimoTag()=="STR" && campi[0]=="YES" ) {
+                
+                    condivisa.setStatoInizio(true);
+                    
+                }
+                condivisa.setUltimoTag(campi[0]);
+                
+                //condivisa.setCheckLetto(Boolean.FALSE);
+                
+                System.out.println(messaggioRicevuto + "\"\n");
+                
+                Thread.yield();
+            } 
+           
+         
+        }
 }
