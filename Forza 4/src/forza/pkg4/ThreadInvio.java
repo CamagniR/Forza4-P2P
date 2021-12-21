@@ -29,15 +29,16 @@ public class ThreadInvio extends Thread {
     private int IDplayer;
     
     
-     public ThreadInvio(InetAddress address,ForzaQuattro c,String n,Color col) throws SocketException {
+     public ThreadInvio(DatagramSocket socket,InetAddress address,ForzaQuattro c,String n,Color col) throws SocketException {
         this.destinationIPAddress = address;
         condivisa=c;
         nick=n;
         color=col;
         IDplayer=0;
+        udpClientSocket=socket;
         
         // Creo DatagramSocket
-        this.udpClientSocket = new DatagramSocket(clientport);
+        //this.udpClientSocket = new DatagramSocket(clientport);
         this.udpClientSocket.connect(destinationIPAddress, clientport);
     }
  
@@ -59,6 +60,7 @@ public class ThreadInvio extends Thread {
                     
                     clientMessage="STR;"+nick+";"+color;
                     IDplayer=1;
+                    System.out.println("sono nel primo if");
                     
                 }
                 if (condivisa.getUltimoTag().equals("STR") && condivisa.getUltimoGiocatore()!=IDplayer) {
@@ -96,6 +98,7 @@ public class ThreadInvio extends Thread {
                     
                     
                 }
+                
                 
                 condivisa.setUltimoGiocatore(IDplayer);  
                 byte[] sendData = new byte[1024];

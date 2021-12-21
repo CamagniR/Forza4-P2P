@@ -26,8 +26,10 @@ public class ForzaQuattro {
     
     public ForzaQuattro() {
         
+        matrix=new Casella[ROW][];
         for(int i=0;i<ROW;i++)
         {
+            matrix[i]=new Casella[COL];
             for(int j=0;j<COL;j++)
             {
                 matrix[i][j]=new Casella();

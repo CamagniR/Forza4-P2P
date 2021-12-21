@@ -6,6 +6,7 @@
 package forza.pkg4;
 
 import java.awt.Color;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -27,6 +28,7 @@ public class Giocatore {
      Color colore=Color.BLACK;
      String nickName;
      InetAddress address ;
+     DatagramSocket udpClientSocket;
         
      Scanner scanner = new Scanner(System.in);
      System.out.println("Inserisci IP del peer del destinatario:");
@@ -53,20 +55,19 @@ public class Giocatore {
                     break;            
         }
                     
-        
-        
+        ip = "172.16.102.117";
+        nickName = "gigi";
+        colore = Color.RED;
+        udpClientSocket=new DatagramSocket(2010);
         address = InetAddress.getByName(ip);
-        ThreadInvio threadInvio = new ThreadInvio(address,condivisa,nickName,colore);
-        threadInvio.start();
-        ThreadRicevi threadRiceve = new ThreadRicevi(threadInvio.getSocket(),condivisa);
+        
+        ThreadRicevi threadRiceve = new ThreadRicevi(udpClientSocket,condivisa);
         threadRiceve.start();
-     
         
-        
-        
-        
-        
-        
+        udpClientSocket=new DatagramSocket(2011);
+        ThreadInvio threadInvio = new ThreadInvio(udpClientSocket,address,condivisa,nickName,colore);
+        threadInvio.start();
+                
         
         
     }
