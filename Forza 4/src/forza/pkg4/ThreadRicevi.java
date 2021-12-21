@@ -23,8 +23,9 @@ public class ThreadRicevi extends Thread{
     private static int portaRicezione=2003;
     
 
-    public ThreadRicevi(DatagramSocket ds, ForzaQuattro c) throws Exception {
-        this.udpClientSocket = ds;
+    public ThreadRicevi(int port, ForzaQuattro c) throws Exception {
+        this.udpClientSocket=new DatagramSocket(port);
+        portaRicezione = port;
         condivisa=c;
         IDplayer=0;
     }

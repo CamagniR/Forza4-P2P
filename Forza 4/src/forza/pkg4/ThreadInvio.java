@@ -13,6 +13,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,23 +26,28 @@ public class ThreadInvio extends Thread {
     private ForzaQuattro condivisa;
     private InetAddress destinationIPAddress;
     private DatagramSocket udpClientSocket;
-    private static int clientport=2003;
     private String nick;
     private Color color;
     private int IDplayer;
+    private int portaTrasmissione;
+
     
-    
-     public ThreadInvio(DatagramSocket socket,InetAddress address,ForzaQuattro c,String n,Color col) throws SocketException {
-        this.destinationIPAddress = address;
-        condivisa=c;
-        nick=n;
-        color=col;
-        IDplayer=0;
-        udpClientSocket=socket;
-        
-        // Creo DatagramSocket
-        //this.udpClientSocket = new DatagramSocket(clientport);
-        this.udpClientSocket.connect(destinationIPAddress, clientport);
+     public ThreadInvio(int port, String ip,ForzaQuattro c,String n,Color col) throws SocketException {
+        try {
+            this.udpClientSocket=new DatagramSocket(port);
+            portaTrasmissione = port;
+            condivisa=c;
+            nick=n;
+            color=col;
+            IDplayer=0;
+            destinationIPAddress = InetAddress.getByName(ip);;
+            
+            // Creo DatagramSocket
+            //this.udpClientSocket = new DatagramSocket(clientport);
+            this.udpClientSocket.connect(destinationIPAddress, portaTrasmissione);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ThreadInvio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
  
     public DatagramSocket getSocket() {
@@ -103,7 +111,7 @@ public class ThreadInvio extends Thread {
                 condivisa.setUltimoGiocatore(IDplayer);  
                 byte[] sendData = new byte[1024];
                 sendData = clientMessage.getBytes();
-                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, destinationIPAddress, clientport);
+                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, destinationIPAddress, portaTrasmissione);
                 udpClientSocket.send(sendPacket);
                 //condivisa.setCheckLetto(Boolean.TRUE);
                 Thread.yield();

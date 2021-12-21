@@ -58,14 +58,13 @@ public class Giocatore {
         ip = "172.16.102.117";
         nickName = "gigi";
         colore = Color.RED;
-        udpClientSocket=new DatagramSocket(2010);
-        address = InetAddress.getByName(ip);
         
-        ThreadRicevi threadRiceve = new ThreadRicevi(udpClientSocket,condivisa);
-        threadRiceve.start();
         
-        udpClientSocket=new DatagramSocket(2011);
-        ThreadInvio threadInvio = new ThreadInvio(udpClientSocket,address,condivisa,nickName,colore);
+        
+        //ThreadRicevi threadRiceve = new ThreadRicevi(2003,condivisa);
+        //threadRiceve.start();
+        
+        ThreadInvio threadInvio = new ThreadInvio(2004,ip,condivisa,nickName,colore);
         threadInvio.start();
                 
         
