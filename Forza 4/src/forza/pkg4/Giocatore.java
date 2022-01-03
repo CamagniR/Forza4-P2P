@@ -55,14 +55,12 @@ public class Giocatore {
                     break;            
         }
                     
-        ip = "172.16.102.117";
-        nickName = "gigi";
-        colore = Color.RED;
         
         
         
-        //ThreadRicevi threadRiceve = new ThreadRicevi(2003,condivisa);
-        //threadRiceve.start();
+        
+        ThreadRicevi threadRiceve = new ThreadRicevi(2003,condivisa);
+        threadRiceve.start();
         
         ThreadInvio threadInvio = new ThreadInvio(2004,ip,condivisa,nickName,colore);
         threadInvio.start();

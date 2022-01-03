@@ -78,8 +78,11 @@ public class ThreadInvio extends Thread {
                         IDplayer=2;
                         
                         //invio all'altro peer
-                    clientMessage= "YES;"+nick+";"+color;
+                    clientMessage= "YES;"+nick+";"+color.toString();
+                    
                     }
+                     
+                     
                      else{
                          clientMessage="NON";
                      }
@@ -103,11 +106,62 @@ public class ThreadInvio extends Thread {
                 
                 if (condivisa.getUltimoTag().equals("YES")&&condivisa.isStatoInizio()==true && condivisa.getUltimoGiocatore()!=IDplayer) {
                 
+                    System.out.println("in ch colonna vuoi inserire la fish (da 1 a 7 )");
+                    clientMessage=userInput.readLine();
+                    int colonna= Integer.parseInt(clientMessage);
+                    if (condivisa.rigaLibera(colonna)!= -1) {
+                       
+                        condivisa.occupaCasella(colonna,color );
+                        clientMessage="INV;"+colonna+";"+"false"; //al posto di false va lo stato della partita
+                        
+                        
+                    }else{
+                        
+                        System.out.println("errore, colonna piena");
                     
+                    }   
                     
                 }
                 
+                 if (condivisa.getUltimoTag().equals("INV")&&condivisa.isStatoInizio()==true && condivisa.getUltimoGiocatore()!=IDplayer && condivisa.isPartitaFinita()==false) {
                 
+                    System.out.println("in ch colonna vuoi inserire la fish (da 1 a 7 )");
+                    clientMessage=userInput.readLine();
+                    int colonna= Integer.parseInt(clientMessage);
+                    if (condivisa.rigaLibera(colonna)!= -1) {
+                       
+                        condivisa.occupaCasella(colonna,color );
+                        clientMessage="INV;"+colonna+";"+"false"; //al posto di false va lo stato della partita
+                        
+                        
+                    }else{
+                        
+                        System.out.println("errore, colonna piena");
+                    
+                    }   
+                    
+                }
+                
+                 if (condivisa.isPartitaFinita()==true) {
+                
+                    System.out.println("vuoi fare la rivincita? (si/no)");
+                    clientMessage=userInput.readLine();
+                    
+                    if (clientMessage=="si") {
+                       
+                    
+                        clientMessage="RIY";
+                        
+                        
+                    }else if (clientMessage=="no") {
+                         
+                        clientMessage="RIN";
+                    }  
+                    
+                }
+                 
+                 
+                 
                 condivisa.setUltimoGiocatore(IDplayer);  
                 byte[] sendData = new byte[1024];
                 sendData = clientMessage.getBytes();

@@ -60,16 +60,87 @@ public class ForzaQuattro {
         return i;
     }
    
-    public boolean occupaCasella(int colonna,Color colore)
+    public void occupaCasella(int colonna,Color colore)
     {
         int rigalibera=rigaLibera(colonna);
         if (rigalibera!=-1) {
             matrix[rigalibera][colonna].setOccupata(true);
             matrix[rigalibera][colonna].setColore(colore);
-            return true;
+            
+        }
+        
+       
+    }
+    
+    
+    public void svuotaCampo()
+    {
+        matrix=new Casella[ROW][];
+        for(int i=0;i<ROW;i++)
+        {
+            matrix[i]=new Casella[COL];
+            for(int j=0;j<COL;j++)
+            {
+                matrix[i][j]=new Casella();
+            }
+        }
+        partitaFinita=false;
+        statoInizio=false; //false = non è iniziata la partita
+        ultimoTag="";
+        ultimoGiocatore=0;
+        
+    }
+    
+    
+    public boolean checkRighe(Color colore)
+    {
+        int contatore=4;
+        int r=5;
+        int c=0;
+        
+        
+        while(r>=0 && contatore>0)
+        {
+
+            while(c<7 && contatore<0)
+            {
+                if (matrix[r][c].getColore()== colore) {
+                    
+                    contatore--;
+                    
+                }else{
+                
+                    contatore=4;
+                }
+            
+            }
+            r--;
+        }
+        
+        if(contatore==0)
+        {
+            return true; //trovati 4 di fila
         }
         
         return false;
+        
+    }
+    
+    public boolean checkColonne(Color colore)
+    {
+    return false;
+    }
+    
+    public boolean checkDiagonali(Color colore)
+    {
+    return false;
+    }
+    
+    public boolean checkWin(Color colore)
+    {
+        
+        return false;
+        
     }
 
     public void setPartitaFinita(boolean partitaFinita) {
