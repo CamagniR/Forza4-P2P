@@ -107,11 +107,30 @@ public class ForzaQuattro {
     }
 
     public boolean checkColonne(Color colore) {
+        int contatore = 4;
+        int c = 7;
+        int r = 0;
+        
+        while(c >= 0 && contatore > 0){
+            while (r < 5 && contatore < 0){
+                if(matrix[r][c].getColore().equals(colore)){
+                    contatore --;
+                }
+                else{
+                    contatore = 4;
+                }
+            }
+            c--;
+        }
+        if (contatore == 0) {
+            return true;
+        }
         return false;
     }
 
     public boolean checkDiagonali(Color colore) {
 
+        boolean win = false;
         //diagonale sinistra a destra
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COL; j++) {
@@ -119,34 +138,33 @@ public class ForzaQuattro {
                     //basso sx
                     if (j > 2 && i <= 3) {
                         if (temp.equals(matrix[j - 1][i + 1]) && temp.equals(matrix[j - 2][i + 2]) && temp.equals(matrix[j - 3][i + 3])) {
-                               checkWin(colore);
+                               win = vincitore(colore);
                         }
                     }//alto sx
                     else if (j <= 2 && i <= 3) {
                         if (temp.equals(matrix[j + 1][i + 1]) && temp.equals(matrix[j + 2][i + 2])&& temp.equals(matrix[j + 3][i + 3])){
-                             checkWin(colore);
+                             win = vincitore(colore);
                         }
                     }//alto dx
                     else if (j <= 2 && i >= 3) {
                         if (temp.equals(matrix[j + 1][i - 1]) && temp.equals(matrix[j + 2][i - 2]) && temp.equals(matrix[j + 3][i - 3])) {
-                            checkWin(colore);
+                            win = vincitore(colore);
                         }
                     }//basso dx
                     else if (j > 2 && i >= 3) {
                         if (temp.equals(matrix[j - 1][i - 1]) && temp.equals(matrix[j - 2][i - 2])&& temp.equals(matrix[j - 3][i - 3])) {
-                            checkWin(colore);
+                            win = vincitore(colore);
                         }
                     }
                     
                 }
             }
-            return false;
+            return win;
         }
     
     
 
-    public boolean checkWin(Color colore) {
-
+    public boolean vincitore(Color colore) {
         return false;
 
     }
