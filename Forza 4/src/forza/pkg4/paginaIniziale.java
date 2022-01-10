@@ -23,6 +23,9 @@ public class paginaIniziale extends javax.swing.JFrame {
     InetAddress address ;
     DatagramSocket udpClientSocket;
     String ip;
+    CampoGioco graficaCampoCheNeSo;
+    private ThreadInvio threadInvio;
+    private ThreadRicevi threadRiceve;
     /**
      * Creates new form paginaIniziale
      */
@@ -32,7 +35,9 @@ public class paginaIniziale extends javax.swing.JFrame {
         ip = jTextField1.getText();
         
      nickName = jTextField2.getText();
-        
+     
+      threadInvio=null;
+      threadRiceve=null;
      String codColore= jComboBox1.getActionCommand();
         
         switch(codColore){
@@ -49,6 +54,10 @@ public class paginaIniziale extends javax.swing.JFrame {
                     colore=Color.GREEN;
                     break;            
         }
+        
+        graficaCampoCheNeSo=new CampoGioco(condivisa,nickName,colore);
+        
+        
     }
 
     /**
@@ -132,7 +141,7 @@ public class paginaIniziale extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ThreadRicevi threadRiceve;
+        
         try {
             threadRiceve = new ThreadRicevi(2003,condivisa);
             threadRiceve.start();
@@ -141,13 +150,25 @@ public class paginaIniziale extends javax.swing.JFrame {
         }
         
         
-        ThreadInvio threadInvio;
+        
         try {
             threadInvio = new ThreadInvio(2004,ip,condivisa,nickName,colore);
             threadInvio.start(); 
         } catch (SocketException ex) {
             Logger.getLogger(paginaIniziale.class.getName()).log(Level.SEVERE, null, ex);
         }   
+        
+        if (condivisa.isStatoInizio()==true) {
+            
+            //passo all'altra finestra se sapessi come si fa 
+            graficaCampoCheNeSo.setThreadInvio(threadInvio);
+            graficaCampoCheNeSo.setThreadRicevi(threadRiceve);
+            graficaCampoCheNeSo.setVisible(true);
+            this.setVisible(false);
+            
+        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
