@@ -53,7 +53,7 @@ public class ThreadRicevi extends Thread{
                 String[] campi= messaggioRicevuto.split(";");
                 if (condivisa.getUltimoTag()=="STR" && campi[0]=="YES" ) {
                 
-                    condivisa.setStatoInizio(true);
+                    condivisa.setDatiDaInviare(true);
                     
                 }
                 

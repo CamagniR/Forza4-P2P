@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * @author ricca
  */
 public class paginaIniziale extends javax.swing.JFrame {
-    ForzaQuattro condivisa= new ForzaQuattro();
+    ForzaQuattro condivisa;
     String nickName;
     Color colore;
     InetAddress address ;
@@ -31,6 +31,25 @@ public class paginaIniziale extends javax.swing.JFrame {
      */
     public paginaIniziale() {
         initComponents();
+        condivisa= new ForzaQuattro();
+        
+               try {
+            threadRiceve = new ThreadRicevi(2003,condivisa);
+            threadRiceve.start();
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(paginaIniziale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        try {
+            threadInvio = new ThreadInvio(2004,ip,condivisa,nickName,colore);
+            threadInvio.start(); 
+        } catch (SocketException ex) {
+            Logger.getLogger(paginaIniziale.class.getName()).log(Level.SEVERE, null, ex);
+        }  
         
         ip = jTextField1.getText();
         
@@ -142,29 +161,19 @@ public class paginaIniziale extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        try {
-            threadRiceve = new ThreadRicevi(2003,condivisa);
-            threadRiceve.start();
-        } catch (Exception ex) {
-            Logger.getLogger(paginaIniziale.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        condivisa.setInizioConnessione(true);
+        condivisa.setDatiDaInviare(true);
         
+  
         
-        
-        try {
-            threadInvio = new ThreadInvio(2004,ip,condivisa,nickName,colore);
-            threadInvio.start(); 
-        } catch (SocketException ex) {
-            Logger.getLogger(paginaIniziale.class.getName()).log(Level.SEVERE, null, ex);
-        }   
-        
-        if (condivisa.isStatoInizio()==true) {
+        if (condivisa.isCiSonoDatiInviare()==true) {
+            this.setVisible(false);
+            
             
             //passo all'altra finestra se sapessi come si fa 
             graficaCampoCheNeSo.setThreadInvio(threadInvio);
             graficaCampoCheNeSo.setThreadRicevi(threadRiceve);
             graficaCampoCheNeSo.setVisible(true);
-            this.setVisible(false);
             
         }
         

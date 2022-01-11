@@ -17,7 +17,8 @@ public class ForzaQuattro {
     private static int COL = 7;
     private static Casella[][] matrix;
     private boolean partitaFinita; // False= non è ancora finita True= partita finita
-    private boolean statoInizio;
+    private boolean inizioPartita; 
+    private boolean inizioConnessione; 
     private String ultimoTag;
     private int ultimoGiocatore; //ultimo player che ha fatto una giocata 1=player1 2=player2
 
@@ -31,9 +32,10 @@ public class ForzaQuattro {
             }
         }
         partitaFinita = false;
-        statoInizio = false; //false = non è iniziata la partita
+        inizioPartita = false; //false = non è iniziata la partita
         ultimoTag = "";
         ultimoGiocatore = 0;
+        inizioConnessione=false;
 
     }
 
@@ -71,7 +73,7 @@ public class ForzaQuattro {
             }
         }
         partitaFinita = false;
-        statoInizio = false; //false = non è iniziata la partita
+        inizioPartita = false; //false = non è iniziata la partita
         ultimoTag = "";
         ultimoGiocatore = 0;
 
@@ -173,16 +175,24 @@ public class ForzaQuattro {
         this.partitaFinita = partitaFinita;
     }
 
-    public void setStatoInizio(boolean statoInizio) {
-        this.statoInizio = statoInizio;
+    public void setDatiDaInviare(boolean statoInizio) {
+        this.inizioPartita = statoInizio;
     }
 
+    public void setInizioConnessione(boolean inizio) {
+        this.inizioConnessione = inizio;
+    }
+    
     public boolean isPartitaFinita() {
         return partitaFinita;
     }
 
-    public boolean isStatoInizio() {
-        return statoInizio;
+    public boolean isCiSonoDatiInviare() {
+        return inizioPartita;
+    }
+    
+     public boolean isInizioConnessione() {
+        return inizioConnessione;
     }
 
     public String getUltimoTag() {
